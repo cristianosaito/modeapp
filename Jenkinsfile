@@ -4,7 +4,7 @@ pipeline{
     stages{
         stage('Get Source'){
             steps{
-                git url: 'https://github.com/cristianosaito/nodeapp.git', branch: 'Master'
+                git url: 'https://github.com/cristianosaito/nodeapp.git', branch: 'master'
             }
         }
 
