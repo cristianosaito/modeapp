@@ -26,5 +26,17 @@ pipeline{
                 }
             }
         }
+
+        stage('Deploy K8s'){
+            agent {
+                kubernetes{
+                    cloud 'kubernetes'
+                }
+            }
+
+            steps{
+                kubernetesDeploy(configs: '**/k8s/**', kubeconfigId: 'kubeconfig')
+            }
+        }
     }
 }
