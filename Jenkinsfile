@@ -11,7 +11,7 @@ pipeline{
         stage('Docker Build'){
             steps{
                 script{
-                    dockerapp = docker.build("cristianosaito/nodeapp:${env.BUILD_ID}", '-f ./Dockerfile .')
+                    dockerapp = docker.build("cristianosaito/nodeapp:v${env.BUILD_ID}", '-f ./Dockerfile .')
                 }
             }
         }
