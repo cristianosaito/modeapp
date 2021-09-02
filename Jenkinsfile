@@ -27,29 +27,29 @@ pipeline{
             }
         }
 
-        // stage('Deploy K8s'){
-        //     agent {
-        //         kubernetes{
-        //             cloud 'kubernetes'
-        //         }
-        //     }
+        stage('Deploy K8s'){
+            agent {
+                kubernetes{
+                    cloud 'kubernetes'
+                }
+            }
 
-        //     steps{
-        //         kubernetesDeploy(configs: '**/k8s/**', kubeconfigId: 'kubeconfig')
-        //     }
-        // }
-
-        stage ('K8S Deploy') {
-        steps {
-            script {
-                kubernetesDeploy(
-                    configs: 'deployment.yaml',
-                    kubeconfigId: 'kubeconfig',
-                    enableConfigSubstitution: true
-                    )           
-               
+            steps{
+                kubernetesDeploy(configs: 'deployment.yaml', kubeconfigId: 'kubeconfig')
             }
         }
-    }
+
+        // stage ('K8S Deploy') {
+        // steps {
+        //     script {
+        //         kubernetesDeploy(
+        //             configs: 'deployment.yaml',
+        //             kubeconfigId: 'kubeconfig',
+        //             enableConfigSubstitution: true
+        //             )           
+               
+        //         }
+        //     }
+        // }
     }
 }
