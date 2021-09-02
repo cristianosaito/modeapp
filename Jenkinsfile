@@ -35,27 +35,8 @@ pipeline{
             }
 
             steps{
-                kubernetesDeploy(configs: '**/k8s/**' kubeconfigId: 'kubeconfig')
+                kubernetesDeploy(configs: '**/k8s/**', kubeconfigId: 'kubeconfig')
             }
         }
-
-        // stage('Deploy k8s') {
-        //     agent { 
-        //         kubernetes { 
-        //             cloud 'kubernetes'
-        //         }
-        //     }
-        //     environment {
-        //         tag_version = "${env.BUILD_ID}"
-        //     }
-        //     steps {
-        //         script {
-        //             sh 'sed -i "s/{{tag}}/$tag_version/g" ./k8s/api/deployment.yaml'              
-        //             sh 'cat ./k8s/api/deployment.yaml'
-        //             kubernetesDeploy(configs: '**/k8s/**', kubeconfigId: 'kubeconfig')
-        //             kubernetesDeploy(configs: '**/nginx/**', kubeconfigId: 'kubeconfig')
-        //         }             
-        //     }
-        // }
     }
 }
