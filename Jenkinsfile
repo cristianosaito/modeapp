@@ -27,29 +27,23 @@ pipeline{
             }
         }
 
-        stage('Deploy K8s'){
-            agent {
-                kubernetes{
+         stage('Deploy k8s') {
+            agent { 
+                kubernetes { 
                     cloud 'kubernetes'
                 }
             }
-
-            steps{
-                kubernetesDeploy(configs: 'deployment.yaml', kubeconfigId: 'kubeconfig')
+            environment {
+                tag_version = "${env.BUILD_ID}"
             }
-        }
-
-        // stage ('K8S Deploy') {
-        // steps {
-        //     script {
-        //         kubernetesDeploy(
-        //             configs: 'deployment.yaml',
-        //             kubeconfigId: 'kubeconfig',
-        //             enableConfigSubstitution: true
-        //             )           
-               
-        //         }
-        //     }
-        // }
+            steps {
+                script {
+                    sh 'sed -i "s/{{tag}}/$tag_version/g" ./k8s/api/deployment.yaml'              
+                    sh 'cat ./k8s/api/deployment.yaml'
+                    kubernetesDeploy(configs: '**/k8s/**', kubeconfigId: 'kubeconfig')
+                    kubernetesDeploy(configs: '**/nginx/**', kubeconfigId: 'kubeconfig')
+                    }             
+                }
+            }
     }
 }
